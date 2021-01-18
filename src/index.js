@@ -1,17 +1,191 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { Component } from "react";
+import { render } from "react-dom";
+import SortableTree, {
+  SortableTreeWithoutDndContext,
+} from "react-sortable-tree";
+import {
+  addNodeUnderParent,
+  getDescendantCount,
+  getNodeAtPath,
+  removeNodeAtPath,
+} from "./utils/tree-data-utils";
+import Button from "react-bootstrap/Button";
+import styled from 'styled-components'
+import "bootstrap/dist/css/bootstrap.min.css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const HomeStyles = styled.div`
+  padding:0% 25%;
+  height: 100vh;
+`;
+const SaveButton = styled.button`
+  padding: 0% 25%;
+  align-items: center;
+  background: #1a202c;
+  color: white;
+  cursor: pointer;
+  border: 1px solid #1a202c;
+  padding: 8px;
+  min-width: 64px;
+  transition: all 0.1s ease-in;
+  &:hover {
+    background: transparent;
+    color: black;
+}
+`;
+
+export default class Tree extends Component {
+  constructor(props) {
+    super(props);
+    this.updateTreeData = this.updateTreeData.bind(this);
+    this.addNode = this.addNode.bind(this);
+    this.removeNode = this.removeNode.bind(this);
+    this.state = {
+      treeData: [
+        { title: "AND", expanded: true },
+        { title: "OR", expanded: true },
+        {
+          title: "ERBB2",
+          expanded: true,
+          children: [
+            { title: "MUTATION" },
+            {
+              title: "CNV",
+              expanded: false,
+              children: [{ title: "High Amplification" }],
+            },
+          ],
+        },
+        {
+          title: "MTAP",
+          expanded: true,
+          children: [
+            {
+              title: "MUTATION",
+              expanded: false,
+              children: [
+                { title: "p.R654L" },
+                { title: "p.T657K" },
+                { title: "p.Y89I" },
+              ],
+            },
+            { title: "Structural Variation" },
+          ],
+        },
+        {
+          title: "MTOR",
+          expanded: true,
+          children: [{ title: "CNV" }, { title: "MUTATION" }],
+        },
+      ],
+    };
+  }
+
+  addNode(rowInfo) {
+    const newNodeName = () =>
+    <form>
+      <label>
+        <input type="text" name="name"/>
+      </label>
+    </form>
+    let { node, treeIndex, path } = rowInfo;
+    path.pop();
+    let parentNode = getNodeAtPath({
+      treeData: this.state.treeData,
+      path: path,
+      getNodeKey: ({ treeIndex }) => treeIndex,
+      ignoredCollapsed: true,
+    });
+    // console.log(parentNode)
+    let getNodeKey = ({ node: object, treeIndex: number }) => {
+      return number;
+    };
+    let parentKey = getNodeKey(parentNode);
+    if (parentKey === -1) {
+      parentKey = null;
+    }
+    // console.log(getNodeKey)
+    let NEW_NODE = {
+      title : newNodeName(),
+      treeIndex: treeIndex + 1}
+    console.log(NEW_NODE)
+    let newTree = addNodeUnderParent({
+      treeData: this.state.treeData,
+      newNode: NEW_NODE,
+      expandParent: true,
+      parentKey: parentKey,
+      getNodeKey: ({ treeIndex }) => treeIndex,
+    });
+    this.setState({ treeData: newTree.treeData });
+  }
+
+  removeNode(rowInfo) {
+    let { node, treeIndex, path } = rowInfo;
+    this.setState({
+      treeData: removeNodeAtPath({
+        treeData: this.state.treeData,
+        path: path,
+        getNodeKey: ({ node: TreeNode, treeIndex: number }) => {
+          console.log(number);
+          return number;
+        },
+        ignoredCollapsed: false,
+      }),
+    });
+  }
+
+  updateTreeData(treeData) {
+    this.setState({ treeData });
+  }
+
+
+
+  render() {
+
+    return (
+
+        <HomeStyles>
+          <SortableTree
+            treeData={this.state.treeData}
+            onChange={(treeData) => this.setState({ treeData })}
+            generateNodeProps={(rowInfo) => ({
+              buttons: [
+                <div>
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={(event) => this.removeNode(rowInfo)}
+                  >
+                    delete
+                  </Button>
+                  &nbsp;
+                  <Button
+                    variant="outline-info"
+                    size="sm"
+                    onClick={(event) => this.addNode(rowInfo)}
+                  >
+                    add
+                  </Button>
+                </div>,
+              ],
+            })}
+          />
+          <SaveButton
+          type="button"
+          variant="success"
+          size="lg"
+
+          >
+            Save
+          </SaveButton>
+        </HomeStyles>
+
+    );
+  }
+
+}
+
+
+
+
+render(<Tree />, document.getElementById("root"));
