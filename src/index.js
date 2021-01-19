@@ -5,6 +5,7 @@ import SortableTree, {
 } from "react-sortable-tree";
 import {
   addNodeUnderParent,
+  getFlatDataFromTree,
   getDescendantCount,
   getNodeAtPath,
   removeNodeAtPath,
@@ -12,6 +13,7 @@ import {
 import Button from "react-bootstrap/Button";
 import styled from 'styled-components'
 import "bootstrap/dist/css/bootstrap.min.css";
+import { get } from "mongoose";
 
 
 const HomeStyles = styled.div`
@@ -83,11 +85,12 @@ export default class Tree extends Component {
 
   addNode(rowInfo) {
     const newNodeName = () =>
-    <form>
-      <label>
-        <input type="text" name="name"/>
-      </label>
-    </form>
+      <form>
+        <label>
+          <input type="text" name="name"/>
+        </label>
+      </form>
+
     let { node, treeIndex, path } = rowInfo;
     path.pop();
     let parentNode = getNodeAtPath({
@@ -106,7 +109,7 @@ export default class Tree extends Component {
     }
     // console.log(getNodeKey)
     let NEW_NODE = {
-      title : newNodeName(),
+      title: newNodeName(),
       treeIndex: treeIndex + 1}
     console.log(NEW_NODE)
     let newTree = addNodeUnderParent({
@@ -117,6 +120,7 @@ export default class Tree extends Component {
       getNodeKey: ({ treeIndex }) => treeIndex,
     });
     this.setState({ treeData: newTree.treeData });
+    console.log(newTree)
   }
 
   removeNode(rowInfo) {
@@ -138,16 +142,25 @@ export default class Tree extends Component {
     this.setState({ treeData });
   }
 
+  getDataFromTreeAndSave(tree) {
+      window.
+      window.treeDataFinal = tree;
+
+      // console.log(treeDataFinal)
+  }
+
 
 
   render() {
 
     return (
-
         <HomeStyles>
           <SortableTree
             treeData={this.state.treeData}
-            onChange={(treeData) => this.setState({ treeData })}
+            onChange={(treeData) => {
+              debugger;
+              this.setState({ treeData })}
+            }
             generateNodeProps={(rowInfo) => ({
               buttons: [
                 <div>
@@ -174,18 +187,17 @@ export default class Tree extends Component {
           type="button"
           variant="success"
           size="lg"
-
+          onClick={(event) => this.getDataFromTree(this.state.treeData)}
           >
             Save
           </SaveButton>
         </HomeStyles>
 
+
     );
+
   }
 
 }
-
-
-
 
 render(<Tree />, document.getElementById("root"));
