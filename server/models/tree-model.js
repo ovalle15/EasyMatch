@@ -1,23 +1,44 @@
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Tree = new Schema(
+let TreeSchema = new Schema(
     {
         title: {
             type: String,
             required: true
-        } ,
-        expanded: {
-            type: Boolean,
-            required: true
         },
-        children: {
+        tree: {
             type: Array,
-            of: String,
+            of: Object,
             required: false
         }
-    },
-    { timestamps: true }
-)
+    }, {
+	timestamps: true
+});
 
-module.exports = mongoose.model('treedb', Tree)
+module.exports = mongoose.model('tree', TreeSchema);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

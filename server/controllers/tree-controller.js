@@ -1,7 +1,7 @@
 const { response } = require('express');
 const Tree = require('../models/tree-model');
 
-getTree = async(req, res) => {
+getTrees = async(req, res) => {
     await Tree.find({}, (err, trees) => {
         if (err) {
             console.error(`400 in 'getTree': ${err}`);
@@ -42,7 +42,7 @@ getTree = async(req, res) => {
 getTreeById = async(req, res) => {
     await Tree.find({ _id: req.params.id }, (err, trees) => {
         if (err) {
-            console.error(`[Hack.Diversity React Template] - 400 in 'getTreeById': ${err}`);
+            console.error(`400 in 'getTreeById': ${err}`);
             return res
                 .status(400)
                 .json({
@@ -51,7 +51,7 @@ getTreeById = async(req, res) => {
                 });
         }
         if (!trees.length) {
-            console.error(`[Hack.Diversity React Template] - 404 in 'getTreeById': Item not found`);
+            console.error(`404 in 'getTreeById': Item not found`);
             return res
                 .status(404)
                 .json({
@@ -59,7 +59,7 @@ getTreeById = async(req, res) => {
                     error: 'Item not found',
                 });
         }
-        console.log(`[Hack.Diversity React Template] - 200 in 'getTreeById': Item fetched!`);
+        console.log(`200 in 'getTreeById': Item fetched!`);
         return res
             .status(200)
             .json({
@@ -67,18 +67,17 @@ getTreeById = async(req, res) => {
                 item: trees[0],
             });
     }).catch(err => {
-        console.error(`[Hack.Diversity React Template] - caught error in 'getTreeById': ${err}`);
+        console.error(`caught error in 'getTreeById': ${err}`);
         console.error(err);
         return err;
     });
 };
 createTree = (req, res) => {
     const body = req.body;
-    // console.log('----------------------- createItem: req -----------------------')
-    // console.log(req);
-    // console.log('----------------------- createItem: body -----------------------')
-    // console.log(body);
-
+    console.log('----------------------- createItem: req -----------------------')
+    console.log(req);
+    console.log('----------------------- createItem: body -----------------------')
+    console.log(body);
     if (!body) {
         return res
             .status(400)
@@ -91,29 +90,29 @@ createTree = (req, res) => {
     const tree = new Tree(body);
 
     if (!tree) {
-        console.error(`[Hack.Diversity React Template] - 400 in 'createItem': 'item' is malformed.`);
+        console.error(`400 in 'createTree': 'Tree' is malformed.`);
         return res
             .status(400)
             .json({
                 success: false,
-                message: "'item' is malformed"
+                message: "'Tree' is malformed"
             });
     }
 
     return tree
         .save()
         .then(() => {
-            console.error(`[Hack.Diversity React Template] - 201 in 'createItem': Item created!`);
+            console.error(`201 in 'createTree': Tree created!`);
             return res
                 .status(201)
                 .json({
                     success: true,
                     id: tree._id,
-                    message: 'Item created!',
+                    message: 'Tree created!',
                 });
         })
         .catch(err => {
-            console.error(`[Hack.Diversity React Template] - caught error in 'createItem': ${err.errors.name}`);
+            console.error(`caught error in 'createITree': ${err.errors.name}`);
             Object.keys(err.errors).forEach(errorKey => {
                 console.error(`ERROR for: ${errorKey}`);
                 console.error(`=> ${((err.errors[errorKey] || {}).properties || {}).message}`);
@@ -128,13 +127,15 @@ createTree = (req, res) => {
         });
 };
 updateTree = (req, res) => {
+
+    console.log("This is the body ---->", req.body)
     const body = req.body;
-    // console.log('----------------------- updateItem: req -----------------------');
-    // console.log(req);
-    // console.log('----------------------- updateItem: body -----------------------');
-    // console.log(body);
+    console.log('----------------------- updateItem: req -----------------------');
+    console.log(req);
+    console.log('----------------------- updateItem: body -----------------------');
+    console.log(body);
     if (!body) {
-        console.error(`[Hack.Diversity React Template] - 400 in 'updateItem': You must provide an item to update.`);
+        console.error(` 400 in 'updateTree': You must provide an Tree to update.`);
         return res
             .status(400)
             .json({
@@ -145,11 +146,14 @@ updateTree = (req, res) => {
 
     const treeForUpdate = {
         _id: req.params.id,
-        name: body.name,
-        daysOfWeek: body.daysOfWeek,
-        timeframeNote: body.timeframeNote,
-        priority: body.priority,
-        content: body.content,
+        title: req.title,
+        tree: req.tree
+        // _id: req.params.id,
+        // name: body.name,
+        // daysOfWeek: body.daysOfWeek,
+        // timeframeNote: body.timeframeNote,
+        // priority: body.priority,
+        // content: body.content,
     };
 
     // console.log('----------------------- updateItem: res -----------------------');
@@ -157,14 +161,14 @@ updateTree = (req, res) => {
 
     return Tree.updateOne({ _id: req.params.id }, treeForUpdate, (err, writeOpRes) => {
         if (err) {
-            console.error(`[Hack.Diversity React Template] - 404 in 'updateItem': Item not found!`);
+            console.error(`'updateTree': Item not found!`);
             console.error(err);
             return res
                 .status(404)
                 .json({
                     success: false,
                     error: err,
-                    message: 'Item not found!',
+                    message: 'Tree not found!',
                 });
         }
         // TODO: make this neater
@@ -175,17 +179,17 @@ updateTree = (req, res) => {
     .then(res => {
         // console.log('----------------------- updateItem - findOne: res -----------------------');
         // console.log(res);
-        console.log(`[Hack.Diversity React Template] - 200 in 'updateItem': Item updated!`);
+        console.log(` 200 in 'updateTree': Tree updated!`);
         return res
             .status(200)
             .json({
                 success: true,
                 id: req.params.id,
-                message: 'Item updated!',
+                message: 'Tree updated!',
                 writeOpResult: res
             });
     }).catch(err => {
-        console.error(`[Hack.Diversity React Template] - caught error in 'updateItem': ${err}`);
+        console.error(`caught error in 'updateTree': ${err}`);
         console.error(err);
         return err;
     });
@@ -193,7 +197,7 @@ updateTree = (req, res) => {
 deleteTree = async (req, res) => {
     await Tree.findOneAndDelete({ _id: req.params.id }, (err, tree) => {
         if (err) {
-            console.error(`[Hack.Diversity React Template] - 400 in 'deleteItem': ${err}`);
+            console.error(`400 in 'deleteTree': ${err}`);
             return res
                 .status(400)
                 .json({
@@ -203,12 +207,12 @@ deleteTree = async (req, res) => {
         }
 
         if (!tree) {
-            console.error(`[Hack.Diversity React Template] - 400 in 'deleteItem': Item not found!`);
+            console.error(` 400 in 'deleteTree': Item not found!`);
             return res
                 .status(400)
                 .json({
                     success: false,
-                    error: 'Item not found!',
+                    error: 'Tree not found!',
                 });
         }
 
@@ -219,13 +223,13 @@ deleteTree = async (req, res) => {
                 item: tree,
             });
     }).catch(err => {
-        console.error(`[Hack.Diversity React Template] - caught error in 'deleteItem': ${err}`);
+        console.error(`caught error in 'deleteTree': ${err}`);
         console.error(err);
         return err;
     });
 };
 module.exports = {
-    getTree,
+    getTrees,
     getTreeById,
     createTree,
     updateTree,

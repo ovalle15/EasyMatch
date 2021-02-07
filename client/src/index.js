@@ -13,11 +13,12 @@ import {
   removeNodeAtPath,
 } from "./utils/tree-data-utils";
 import Button from "react-bootstrap/Button";
-import styled from 'styled-components'
+import styled, { ThemeConsumer } from 'styled-components'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { get } from "mongoose";
 import InputForm from './utils/InputForm';
 
+import apis from "./api/index"
 
 const HomeStyles = styled.div`
   padding:0% 25%;
@@ -46,6 +47,10 @@ export default class Tree extends Component {
     this.addNode = this.addNode.bind(this);
     this.removeNode = this.removeNode.bind(this);
     this.state = {
+      tree: {
+        title: "This is a title",
+        trees: () => this.state.treeData
+      },
       treeData: [
         { title: "AND", expanded: true },
         { title: "OR", expanded: true },
@@ -141,25 +146,35 @@ export default class Tree extends Component {
     this.setState({ treeData });
   }
 
-
   getFlatDataFromTree() {
-
     debugger;
-    // console.log(this.state.treeData)
     if (!this.state.treeData || this.state.treeData.length < 1) {
       return [];
     }
     debugger;
-    const flattened = [];
-    flattened.push(this.state.treeData)
-    console.log(flattened)
-    return flattened;
-  }
+    const flattened = {
+      title: this.state.tree.title,
+      children: this.state.tree.trees()
+    }
+    console.log("This is the saved tree ---->" , flattened)
+
+    return apis.insertTree(flattened)
+      .then(resp => {
+        console.log("this is the response", resp)
+        if (resp) {
+          window.alert(resp.data.message);
+        }
+        return resp;
+      })
+      .catch(err => {
+        console.error(err);
+        return err;
+      });
 
 
+  };
 
-  render() {
-
+render() {
     return (
         <HomeStyles>
           <SortableTree
@@ -194,7 +209,7 @@ export default class Tree extends Component {
           type="button"
           variant="success"
           size="lg"
-          onClick={(event) => this.getFlatDataFromTree(this.state.treeData)}
+          onClick={(event) => this.getFlatDataFromTree()}
           >
             Save
           </SaveButton>

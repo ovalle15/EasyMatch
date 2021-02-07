@@ -11,11 +11,11 @@ const api = axios.create({
 
 // TODO - use interceptors for better error handling: https://masteringjs.io/tutorials/axios/interceptors#error-handling
 
-export const getAllItrees = payload => api.get(`/items`, payload);
-export const getTreeById = id => api.get(`/item/${id}`);
-export const insertTree = payload => api.post(`/item`, payload);
-export const updateTreeById = (id, payload) => api.put(`/item/${id}`, payload);
-export const deleteTreeById = id => api.delete(`/item/${id}`);
+export const getAllItrees = payload => api.get(`/trees`, payload);
+export const getTreeById = id => api.get(`/tree/${id}`);
+export const insertTree = payload => api.post(`/tree`, payload);
+export const updateTreeById = (id, payload) => api.put(`/tree/${id}`, payload);
+export const deleteTreeById = id => api.delete(`/tree/${id}`);
 
 const apis = {
     getAllItrees,
