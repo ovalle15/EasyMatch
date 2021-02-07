@@ -122,7 +122,7 @@ export default class Tree extends Component {
       parentKey: parentKey,
       getNodeKey: ({ treeIndex }) => treeIndex,
     });
-    debugger;
+    // debugger;
     this.setState({ treeData: newTree.treeData });
     console.log(newTree)
   }
@@ -147,11 +147,11 @@ export default class Tree extends Component {
   }
 
   getFlatDataFromTree() {
-    debugger;
+    // debugger;
     if (!this.state.treeData || this.state.treeData.length < 1) {
       return [];
     }
-    debugger;
+    // debugger;
     const flattened = {
       title: this.state.tree.title,
       children: this.state.tree.trees()
