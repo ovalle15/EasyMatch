@@ -10,23 +10,24 @@ class InputForm extends React.Component {
             this.handleSubmit = this.handleSubmit.bind(this);
 
         }
-
         handleChange(event) {
             this.setState({value:event.target.value});
-        }
+        };
         handleSubmit(event) {
             alert("something was submitted" + this.state.value);
             event.preventDefault();
-        }
+        };
 
-        render() {
-            return(
+        main () {
+            let out = (
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         <input type="text" value={this.state.value} onchange={this.handleChange}/>
                     </label>
                 </form>
+
             )
+            this.emit("main", out)
         }
 }
 

@@ -7,6 +7,8 @@ import {
   addNodeUnderParent,
   getFlatDataFromTree,
   getDescendantCount,
+  walk,
+  walkDescendants,
   getNodeAtPath,
   removeNodeAtPath,
 } from "./utils/tree-data-utils";
@@ -14,6 +16,7 @@ import Button from "react-bootstrap/Button";
 import styled from 'styled-components'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { get } from "mongoose";
+import InputForm from './utils/InputForm';
 
 
 const HomeStyles = styled.div`
@@ -84,12 +87,6 @@ export default class Tree extends Component {
   }
 
   addNode(rowInfo) {
-    const newNodeName = () =>
-      <form>
-        <label>
-          <input type="text" name="name"/>
-        </label>
-      </form>
 
     let { node, treeIndex, path } = rowInfo;
     path.pop();
@@ -108,8 +105,9 @@ export default class Tree extends Component {
       parentKey = null;
     }
     // console.log(getNodeKey)
+
     let NEW_NODE = {
-      title: newNodeName(),
+      title: node.title,
       treeIndex: treeIndex + 1}
     console.log(NEW_NODE)
     let newTree = addNodeUnderParent({
@@ -119,6 +117,7 @@ export default class Tree extends Component {
       parentKey: parentKey,
       getNodeKey: ({ treeIndex }) => treeIndex,
     });
+    debugger;
     this.setState({ treeData: newTree.treeData });
     console.log(newTree)
   }
@@ -142,11 +141,19 @@ export default class Tree extends Component {
     this.setState({ treeData });
   }
 
-  getDataFromTreeAndSave(tree) {
-      window.
-      window.treeDataFinal = tree;
 
-      // console.log(treeDataFinal)
+  getFlatDataFromTree() {
+
+    debugger;
+    // console.log(this.state.treeData)
+    if (!this.state.treeData || this.state.treeData.length < 1) {
+      return [];
+    }
+    debugger;
+    const flattened = [];
+    flattened.push(this.state.treeData)
+    console.log(flattened)
+    return flattened;
   }
 
 
@@ -187,7 +194,7 @@ export default class Tree extends Component {
           type="button"
           variant="success"
           size="lg"
-          onClick={(event) => this.getDataFromTree(this.state.treeData)}
+          onClick={(event) => this.getFlatDataFromTree(this.state.treeData)}
           >
             Save
           </SaveButton>
