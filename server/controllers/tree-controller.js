@@ -148,18 +148,13 @@ updateTree = (req, res) => {
         _id: req.params.id,
         title: req.title,
         tree: req.tree
-        // _id: req.params.id,
-        // name: body.name,
-        // daysOfWeek: body.daysOfWeek,
-        // timeframeNote: body.timeframeNote,
-        // priority: body.priority,
-        // content: body.content,
     };
 
-    // console.log('----------------------- updateItem: res -----------------------');
-    // console.log(res);
+    console.log('----------------------- updateItem: res -----------------------');
+    console.log(res);
 
     return Tree.updateOne({ _id: req.params.id }, treeForUpdate, (err, writeOpRes) => {
+        console.log("This is the tree to be updated ->", req.params.id);
         if (err) {
             console.error(`'updateTree': Item not found!`);
             console.error(err);
@@ -170,15 +165,15 @@ updateTree = (req, res) => {
                     error: err,
                     message: 'Tree not found!',
                 });
-        }
-        // TODO: make this neater
-        // console.log('----------------------- updateItem: item -----------------------');
-        // console.log(item);
+        };
+
+        console.log('----------------------- updateItem: item -----------------------');
+        console.log(item);
         return writeOpRes;
     })
     .then(res => {
-        // console.log('----------------------- updateItem - findOne: res -----------------------');
-        // console.log(res);
+        console.log('----------------------- updateItem - findOne: res -----------------------');
+        console.log(res);
         console.log(` 200 in 'updateTree': Tree updated!`);
         return res
             .status(200)

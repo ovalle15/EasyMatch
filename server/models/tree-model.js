@@ -8,7 +8,7 @@ let TreeSchema = new Schema(
             type: String,
             required: true
         },
-        tree: {
+        children: {
             type: Array,
             of: Object,
             required: false
