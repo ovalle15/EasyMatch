@@ -11,6 +11,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import api from '../api'
+import {DeleteButton} from "../components";
+import {Link} from 'react-router-dom';
+import Button from "react-bootstrap/Button";
+
 
 const Wrapper = styled.div`
     padding: 0 40px 40px 40px;
@@ -39,7 +43,7 @@ class DisplayTrees extends Component {
         })
     };
 
-    HandleRemoveTree = tree =>{
+    handleRemoveTree = tree =>{
         const treeId = tree;
 
         api.deleteTreeById(treeId).then(resp => {
@@ -65,8 +69,8 @@ class DisplayTrees extends Component {
                     <TableRow>
                         <TableCell>Mongo Id</TableCell>
                         <TableCell>Title</TableCell>
-                        <TableCell>Update</TableCell>
-                        <TableCell>Delete</TableCell>
+                        <TableCell></TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -77,6 +81,29 @@ class DisplayTrees extends Component {
                             </TableCell>
                             <TableCell component="th" scope="row">
                                 {row.title}
+                            </TableCell>
+                            <TableCell>
+                                <Button
+                                    variant="outline-info"
+                                    size="sm">
+                                    <Link
+                                        style={{
+                                            color: 'inherit',
+                                            textDecoration: 'none'
+                                        }}
+                                        data-update-id={row._id}
+                                        to={`/tree/update/${row._id}`}
+                                    >
+                                        Update
+                                    </Link>
+                                </Button>
+                            </TableCell>
+                            <TableCell>
+                                <DeleteButton
+                                id={row._id}
+                                onDelete={this.handleRemoveTree}
+                                >
+                                </DeleteButton>
                             </TableCell>
 
 

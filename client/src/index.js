@@ -3,15 +3,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import styled from 'styled-components';
-const HomeStyles = styled.div`
-  padding:0% 25%;
-  height: 100vh;
+const RootStyles = styled.div`
+  /* max-height: 100vh; */
+  height: 100%;
+  width: 100vw
 `;
 
 ReactDOM.render(
-  <HomeStyles>
+  <RootStyles>
     <App />
-  </HomeStyles>,
+  </RootStyles>,
   document.getElementById('root')
 )
 

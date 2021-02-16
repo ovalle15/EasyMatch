@@ -12,6 +12,7 @@ import { Welcome } from './components';
 import {
   DisplayTrees,
   InsertTree,
+  UpdateTree,
   PageLayout,
   TreesList
 } from './views';
@@ -21,10 +22,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import './App.css';
 
-const HomeStyles = styled.div`
-  padding:0% 25%;
-  height: 100vh;
+const MainViewContainer = styled.div.attrs({
+  className: 'main-view-container'
+})`
+  padding: 0% 10%;
+  /* max-height: 100vh; */
 `;
+
 // Switch will set the return value of the component based on the path, before it renders the
 // the app compoment --> component ={TreesList} will replace the reference to publicViews in the return at the app component.
 class App extends Component {
@@ -36,7 +40,7 @@ class App extends Component {
           <Route exact path={routes.TREES} component={DisplayTrees} />
           {/* <Route exact path={routes.ITEM} component={ItemPage} /> */}
           <Route exact path={routes.TREE_INSERT} component={InsertTree} /> {/* http://localhost:3001/tree/create */}
-          {/* <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} /> */}
+          <Route exact path={routes.TREE_UPDATE} component={UpdateTree} />
           {/* </React.Fragment> */}
       </Switch>
   );
@@ -53,35 +57,10 @@ class App extends Component {
             </Nav>
         </Navbar>
 
-        <div className="main-view-container">
+        <MainViewContainer>
           {publicViews}
-        </div>
+        </MainViewContainer>
       </Router>
     )}
 };
 export default App;
-
-
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
