@@ -130,10 +130,10 @@ updateTree = (req, res) => {
 
     console.log("This is the body ---->", req.body)
     const body = req.body;
-    console.log('----------------------- updateItem: req -----------------------');
-    console.log(req);
-    console.log('----------------------- updateItem: body -----------------------');
-    console.log(body);
+    // console.log('----------------------- updateItem: req -----------------------');
+    // console.log(req);
+    // console.log('----------------------- updateItem: body -----------------------');
+    // console.log(body);
     if (!body) {
         console.error(` 400 in 'updateTree': You must provide an Tree to update.`);
         return res
@@ -146,12 +146,12 @@ updateTree = (req, res) => {
 
     const treeForUpdate = {
         _id: req.params.id,
-        title: req.title,
-        tree: req.tree
+        title: body.title,
+        children: body.children
     };
 
-    console.log('----------------------- updateItem: res -----------------------');
-    console.log(res);
+    // console.log('----------------------- updateItem: res -----------------------');
+    // console.log(res);
 
     return Tree.updateOne({ _id: req.params.id }, treeForUpdate, (err, writeOpRes) => {
         console.log("This is the tree to be updated ->", req.params.id);
@@ -168,10 +168,12 @@ updateTree = (req, res) => {
         };
 
         console.log('----------------------- updateItem: item -----------------------');
-        console.log(item);
+        console.log(writeOpRes);
         return writeOpRes;
     })
-    .then(res => {
+    .then(result => {
+        console.log('----------------------- updateItem - findOne: result -----------------------');
+        console.log(result);
         console.log('----------------------- updateItem - findOne: res -----------------------');
         console.log(res);
         console.log(` 200 in 'updateTree': Tree updated!`);
@@ -181,7 +183,7 @@ updateTree = (req, res) => {
                 success: true,
                 id: req.params.id,
                 message: 'Tree updated!',
-                writeOpResult: res
+                writeOpResult: result
             });
     }).catch(err => {
         console.error(`caught error in 'updateTree': ${err}`);
