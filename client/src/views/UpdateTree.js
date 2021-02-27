@@ -16,29 +16,22 @@ import Button from "react-bootstrap/Button";
 
 import api from "../api";
 import { insertSingleTree } from '../actions';
+import {Link} from 'react-router-dom';
 
 
-const HomeStyles = styled.div`
-  padding:0% 10%;
-  height: 20em;
-  /* max-height: 100vh; */
-`;
+// const HomeStyles = styled.div`
+//   padding:0% 10%;
+//   height: 20em;
+//   /* max-height: 100vh; */
+// `;
 
-const SaveButton = styled.button`
-  padding: 0% 25%;
-  align-items: center;
-  background: #1a202c;
-  color: white;
-  cursor: pointer;
-  border: 1px solid #1a202c;
-  padding: 8px;
-  min-width: 64px;
-  transition: all 0.1s ease-in;
-  &:hover {
-    background: transparent;
-    color: black;
-  }
-`;
+const HomeStyles = styled.div.attrs({
+    className: 'tree-view'
+  })`
+    padding:0% 25%;
+    height: 100vh;
+  `;
+
 
 export default class UpdateTree extends Component {
     constructor(props) {
@@ -197,14 +190,16 @@ export default class UpdateTree extends Component {
                     ],
                     })}
                 />
-                <SaveButton
-                    type="button"
-                    variant="success"
-                    size="lg"
-                    onClick={(event) => this.getFlatDataFromTree()}
-                >
-                    Save
-                </SaveButton>
+                <Link to='/trees'>
+                    <Button
+                        type="button"
+                        variant="outline-success"
+                        size="lg"
+                        onClick={(event) => this.getFlatDataFromTree()}
+                        >
+                        Save
+                    </Button>
+                </Link>
             </HomeStyles>
 
 

@@ -45,7 +45,7 @@ class DisplayTrees extends Component {
 
     handleRemoveTree = tree =>{
         const treeId = tree;
-
+        console.log("This is the tree to be deleted", tree)
         api.deleteTreeById(treeId).then(resp => {
             console.log("handleRemoveTree: resp");
             console.log(resp);
@@ -105,8 +105,6 @@ class DisplayTrees extends Component {
                                 >
                                 </DeleteButton>
                             </TableCell>
-
-
                         </TableRow>
                     ))}
                 </TableBody>

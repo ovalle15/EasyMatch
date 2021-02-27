@@ -38,7 +38,6 @@ class App extends Component {
           {/* <React.Fragment> */}
           <Route exact path={routes.HOME} component={Welcome} />
           <Route exact path={routes.TREES} component={DisplayTrees} />
-          {/* <Route exact path={routes.ITEM} component={ItemPage} /> */}
           <Route exact path={routes.TREE_INSERT} component={InsertTree} /> {/* http://localhost:3001/tree/create */}
           <Route exact path={routes.TREE_UPDATE} component={UpdateTree} />
           {/* </React.Fragment> */}

@@ -15,29 +15,18 @@ import {
 import Button from "react-bootstrap/Button";
 
 import api from "../api";
-import { insertSingleTree } from '../actions';
+import {Link} from 'react-router-dom';
+import { SwipeableDrawer } from '@material-ui/core';
 
 
-const HomeStyles = styled.div`
+
+const HomeStyles = styled.div.attrs({
+  className: 'tree-view'
+})`
   padding:0% 25%;
   height: 100vh;
 `;
 
-const SaveButton = styled.button`
-  padding: 0% 25%;
-  align-items: center;
-  background: #1a202c;
-  color: white;
-  cursor: pointer;
-  border: 1px solid #1a202c;
-  padding: 8px;
-  min-width: 64px;
-  transition: all 0.1s ease-in;
-  &:hover {
-    background: transparent;
-    color: black;
-  }
-`;
 
 export default class InsertTree extends Component {
     constructor(props) {
@@ -161,7 +150,7 @@ export default class InsertTree extends Component {
         .then(resp => {
           console.log("this is the response", resp)
           if (resp) {
-            window.alert(resp.data.message);
+           window.alert(resp.data.message);
           }
           return resp;
         })
@@ -169,8 +158,6 @@ export default class InsertTree extends Component {
             console.error(err);
             return err;
         });
-
-
     };
 
   render() {
@@ -208,14 +195,16 @@ export default class InsertTree extends Component {
                 ],
               })}
             />
-            <SaveButton
-            type="button"
-            variant="success"
-            size="lg"
-            onClick={(event) => this.getFlatDataFromTree()}
-            >
-              Save
-            </SaveButton>
+            <Link to="/trees">
+              <Button
+              type="button"
+              variant="outline-success"
+              size="lg"
+              onClick={(event) => this.getFlatDataFromTree()}
+              >
+                Save
+              </Button>
+            </Link>
           </HomeStyles>
 
 
