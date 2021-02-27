@@ -101,15 +101,18 @@ createTree = (req, res) => {
 
     return tree
         .save()
-        .then(() => {
-            console.error(`201 in 'createTree': Tree created!`);
-            return res
-                .status(201)
-                .json({
-                    success: true,
-                    id: tree._id,
-                    message: 'Tree created!',
-                });
+        .then((saved) => {
+            console.log(saved);
+            if (saved) {
+                console.error(`201 in 'createTree': Tree created!`);
+                return res
+                    .status(201)
+                    .json({
+                        success: true,
+                        id: tree._id,
+                        message: 'Tree created!',
+                    });
+            };
         })
         .catch(err => {
             console.error(`caught error in 'createITree': ${err.errors.name}`);

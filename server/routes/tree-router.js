@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/trees', TreeController.getTrees);
 router.get('/tree/:id', TreeController.getTreeById);
-router.post('/tree', TreeController.createTree); // http://localhost:3000/api/tree
+router.post('/tree', TreeController.createTree);
 router.put('/tree/:id', TreeController.updateTree);
 router.delete('/tree/:id', TreeController.deleteTree);
 
