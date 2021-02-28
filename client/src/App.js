@@ -4,10 +4,11 @@ import { routes } from './routes';
 import logo from './logo.svg';
 
 
+
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
-import { Welcome } from './components';
+import { Welcome , Login} from './components';
 
 import {
   DisplayTrees,
@@ -40,6 +41,7 @@ class App extends Component {
           <Route exact path={routes.TREES} component={DisplayTrees} />
           <Route exact path={routes.TREE_INSERT} component={InsertTree} /> {/* http://localhost:3001/tree/create */}
           <Route exact path={routes.TREE_UPDATE} component={UpdateTree} />
+          <Route exact path={routes.CREATEUSER} component={Login}/>
           {/* </React.Fragment> */}
       </Switch>
   );
@@ -53,6 +55,10 @@ class App extends Component {
             <Nav className="mr-auto">
               <Nav.Link href="/trees">Get Trees</Nav.Link>
               <Nav.Link href="/tree">Create Tree</Nav.Link>
+            </Nav>
+            <Nav>
+              <Nav.Link href="/users/create">Sign Up</Nav.Link>
+              <Nav.Link href="/users/current">Login</Nav.Link>
             </Nav>
         </Navbar>
 
