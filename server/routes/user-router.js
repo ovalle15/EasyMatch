@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get("/current", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
+
+  console.log("When /current is called",user);
   res.send(user);
 });
 
@@ -23,11 +25,11 @@ router.post("/", async (req, res) => {
   console.log("This USER1 --->",user)
 
   user = new User({
-    name: req.body.user.name,
-    password: req.body.user.password,
-    email: req.body.user.email
+    name: req.body.name,
+    password: req.body.password,
+    email: req.body.email
   });
-    console.log("this is req", req)
+    // console.log("this is req", req)
   console.log("This USER2 --->",user)
   user.password = await bcrypt.hash(user.password, 10);
   const newuser = await User.insertMany(user);

@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', routerTree);
-app.use('/api/users/create', routerUser);
+app.use('/api/users', routerUser);
 
 app.listen(apiPort, () => {
     console.log(` Server running on port ${apiPort}`);
