@@ -10,7 +10,7 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
+
             email: '',
             password: ''
         };
@@ -50,10 +50,10 @@ class Login extends Component {
             <div>
                 <h1>Sign Up</h1>
                 <Form onSubmit={this.handleSubmit} >
-                    <FormGroup>
+                    {/* <FormGroup>
                         <Label for="name">First Name</Label>
                         <Input id="li_name" type="text" name="name" placeholder="enter first name" onChange={this.handleChange} />
-                    </FormGroup>
+                    </FormGroup> */}
                     <FormGroup>
                         <Label for="email">Email</Label>
                         <Input id="li_email" type="text" name="email" placeholder="enter email" onChange={this.handleChange} />
