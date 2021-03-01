@@ -36,44 +36,44 @@ export default class InsertTree extends Component {
       this.removeNode = this.removeNode.bind(this);
       this.state = {
         tree: {
-          title: "Recent Title",
+          title: "Week 01/01/2021",
           trees: () => this.state.treeData
         },
         treeData: [
           { title: "AND", expanded: true },
           { title: "OR", expanded: true },
           {
-            title: "ERBB2",
+            title: "MONDAY",
             expanded: true,
             children: [
-              { title: "MUTATION" },
+              { title: "PROJECT-1" },
               {
-                title: "CNV",
+                title: "PROJECT-2",
                 expanded: false,
-                children: [{ title: "High Amplification" }],
+                children: [{ title: "sub-task" }],
               },
             ],
           },
           {
-            title: "MTAP",
+            title: "TUESDAY",
             expanded: true,
             children: [
               {
-                title: "MUTATION",
+                title: "Meeting-1",
                 expanded: false,
                 children: [
-                  { title: "p.R654L" },
-                  { title: "p.T657K" },
-                  { title: "p.Y89I" },
+                  { title: "PowerPoint prep" },
+                  { title: "Call Investors" },
+                  { title: "Meditation practice" },
                 ],
               },
-              { title: "Structural Variation" },
+              { title: "Other stuff" },
             ],
           },
           {
-            title: "MTOR",
+            title: "WEDNESDAY",
             expanded: true,
-            children: [{ title: "CNV" }, { title: "MUTATION" }],
+            children: [{ title: "Flight to Italy" }, { title: "Meet Investors" }],
           },
         ],
       };
