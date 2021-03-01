@@ -3,6 +3,7 @@ import React from 'react';
 import { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
+
 import '../App.css';
 
 class Login extends Component {
@@ -10,10 +11,14 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
             email: '',
             password: ''
+            // id:''
         };
+        console.log("this is the current state", this);
+        console.log("LOCAL STORAGE?????",localStorage);
+        window.localStorage.getItem('token:')
+
         // this.getToken = this.getToken.bind(this);
         // const token = this.getToken();
         // console.log("Token --->", token);
@@ -25,11 +30,15 @@ class Login extends Component {
         });
     }
 
+    // fetchToken = (event) => {
+    //     fetch("http://localhost:3000/api/users/create", {
 
+    //     })
+    // }
 
     handleSubmit = (event) => {
-        fetch("http://localhost:3000/api/users/create", {
-            method: 'POST',
+        fetch("http://localhost:3000/api/users/current", {
+            method: 'GET',
             body: JSON.stringify({user:this.state}),
             headers: new Headers({
                 'Content-Type': 'application/json'
@@ -48,7 +57,7 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <h1>Sign Up</h1>
+                <h1>Login</h1>
                 <Form onSubmit={this.handleSubmit} >
                     {/* <FormGroup>
                         <Label for="name">First Name</Label>
@@ -56,11 +65,22 @@ class Login extends Component {
                     </FormGroup> */}
                     <FormGroup>
                         <Label for="email">Email</Label>
-                        <Input id="li_email" type="text" name="email" placeholder="enter email" onChange={this.handleChange} />
+                        <Input id="li_email"
+                        type="text"
+                        name="email"
+                        placeholder="enter email"
+                        value={this.state.email}
+                        onChange={this.handleChange} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="password">Password</Label>
-                        <Input id="li_password" type="password" name="password" placeholder="enter password" onChange={this.handleChange} />
+                        <Input
+                        id="li_password"
+                        type="password"
+                        name="password"
+                        value={this.state.password}
+                        placeholder="enter password"
+                        onChange={this.handleChange} />
                     </FormGroup>
                     <Button type="submit"> Submit </Button>
                 </Form>

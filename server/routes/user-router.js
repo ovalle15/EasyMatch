@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/current", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
 
-  console.log("When /current is called",user);
+  console.log("When ----/current---- is called",user);
   res.send(user);
 });
 
