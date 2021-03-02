@@ -1,10 +1,12 @@
+// import  response  from 'express';
 import React from 'react';
-
 import { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-
-
 import '../App.css';
+import api from '../api';
+
+
+
 
 class Login extends Component {
 
@@ -16,8 +18,6 @@ class Login extends Component {
             // id:''
         };
         console.log("this is the current state", this);
-        console.log("LOCAL STORAGE?????",localStorage);
-        window.localStorage.getItem('token:')
 
         // this.getToken = this.getToken.bind(this);
         // const token = this.getToken();
@@ -28,30 +28,63 @@ class Login extends Component {
         this.setState({
             [event.target.name]: event.target.value,
         });
-    }
+    };
 
-    // fetchToken = (event) => {
-    //     fetch("http://localhost:3000/api/users/create", {
-
-    //     })
+    // findCurrentUsers = (all_users) => {
+    //     console.log(all_users.data.items);
     // }
 
-    handleSubmit = (event) => {
-        fetch("http://localhost:3000/api/users/current", {
-            method: 'GET',
-            body: JSON.stringify({user:this.state}),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-              })
-        }).then(
-            (response) => response.json()
-        ).then((data) => {
-            console.log("This data ---->", data);
-            this.props.setToken(data.sessionToken)
+
+    handleSubmit = (event, user) => {
+        console.log("User ??? #1", this.state)
+
+        const all_users = api.getUsers();
+
+        all_users.then(resp => {
+            if (resp) {
+                console.log(resp.data.items)
+            }
+            const array = resp.data.items;
+            var i;
+            const len = array.length;
+            for (i=0; i < len; i++){
+            // console.log("This array ==>", array[i]['name'])
+                if (array[i]['email'] == this.state.email && array[i]['password'] == this.state.password) {
+                    // window.alert("You " + this.state.email + "Login !!!!");
+                    const _id = array[i]['_id']
+                    const treeId = array[i]['trees']
+                    console.log(treeId)
+                    console.log(_id)
+
+
+            }}
+
         })
-        console.log("User ???", this.state)
-        console.log("Data", this.state.data);
-        event.preventDefault()
+        event.preventDefault();
+        // return api.getTreeById(treeId)
+
+        // console.log("All users", all_users);
+        // fetch("http://localhost:3000/api/users/all", {
+        //     method: 'GET',
+        //     // body: JSON.stringify({user:this.state}),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json'
+        //       })
+        // }).then(
+        //     (response)  =>  {
+        //         // debugger;
+        //         response.json()
+        //     }
+        // ).then((data) => {
+        //     console.log("This data ---->", data);
+        //     // this.props.setToken(data.sessionToken)
+        // }).catch((e) => {
+        //     console.log("This is the erroror !!!1", e)
+
+        // });
+        // console.log("User ???", this.state)
+        // console.log("Data", this.state.data);
+
     }
 
     render() {

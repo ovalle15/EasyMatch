@@ -16,6 +16,7 @@ export const getTreeById = id => api.get(`/tree/${id}`);
 export const insertTree = payload => api.post(`/tree`, payload);
 export const updateTreeById = (id, payload) => api.put(`/tree/${id}`, payload);
 export const deleteTreeById = id => api.delete(`/tree/${id}`);
+export const getUsers = payload => api.get(`/users/all`, payload);
 
 const apis = {
     getAllTrees,
@@ -23,6 +24,7 @@ const apis = {
     insertTree,
     updateTreeById,
     deleteTreeById,
+    getUsers
 };
 
 export default apis;

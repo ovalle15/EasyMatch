@@ -4,8 +4,12 @@ const config = require("config");
 
 module.exports = function(req, res, next) {
   //get the token from the header if present
+  console.log("This is req", req);
+  console.log("This is res", res);
   console.log("This auth.js this the req =====>", req);
   const token = req.headers["x-access-token"] || req.headers["authorization"];
+  console.log("This is req", req.headers);
+  console.log("This is res", res.headers);
 
   console.log("token, called when retrieved (GET) ====>", token)
   //if no token found, return response (without going to the next middelware)
@@ -21,3 +25,4 @@ module.exports = function(req, res, next) {
     res.status(400).send("Invalid token.");
   }
 };
+
