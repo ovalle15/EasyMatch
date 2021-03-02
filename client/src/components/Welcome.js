@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from '../logo.svg';
+// import logo from '../logo.svg';
+import mern from '../mern.png'
 import diagram from '../diagram.png';
 
 
@@ -11,11 +12,12 @@ const divStyle = {
     textAlign: 'center'
   }
   const Img = {
-      width: '175px',
+      width: '300px',
       textAlign:'center',
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: '40%'
+      marginLeft: '32%',
+      marginTop:'5%'
   }
   const diagImg = {
     width: '600px',
@@ -29,19 +31,40 @@ const divStyle = {
 
 const Welcome = () => (
         <div>
-        <img style={Img} src={logo}></img>
-        <h1  style={Style} > Welcome to my Todo-React-App </h1>s
+        <img style={Img} src={mern}></img>
+        <br></br>
+        <br></br>
+        <h1  style={Style} > Welcome to my Todo-React-App </h1>
+        <br></br>
+        <br></br>
+
+            <h5>Features</h5>
             <ul>
                 <li>
-                    Go to "Create Tree"
+                    MongoDB - Express -  React -  NodeJS
                 </li>
                 <li>
-                    Drag your tasks around the tree and/or create new tasks
+                    Utilization of React JavaScript Libraries
+                    <ul>
+                        <li>
+                            react-sortable-tree
+                        </li>
+                        <li>
+                            react-bootstrap
+                        </li>
+                        <li>
+                            @material-iu/core
+                        </li>
+                        <li>
+                            react-router-dom
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    Update and delete your tree by going to "Get Trees"
+                    MVC architecture
                 </li>
             </ul>
+
             <br></br>
             <h3 style={Style}> Overview of how the app works </h3>
             <img style={ diagImg} src={diagram}/>
@@ -51,16 +74,27 @@ const Welcome = () => (
             <br></br>
             <ul>
                 <li>
-                    User should be able to update the individual nodes in the UI &nbsp;&nbsp;
+                    Resolve page reload after delete and create tree &nbsp;&nbsp;
+                    (in scope of CS-602)
+                </li>
+                <li>
+                    User should be able to update individual nodes in the UI &nbsp;&nbsp;
                     (not in the scope of CS-602)
                 </li>
                 <li>
-                    Authentication should be fully integrated in the UI and backend &nbsp;&nbsp;
+                    Authentication should be fully integrated &nbsp;&nbsp;
                     (not in the scope of CS-602?)
                 </li>
                 <li>
                     In the "Get trees" table an unique tree identifier should replace the mongo ID &nbsp;&nbsp;
                     (not in the scope of CS-602)
+                </li>
+                <li>
+                    Responsive UI and customized tree  &nbsp;&nbsp;
+                    (not in the scope of CS-602)
+                </li>
+                <li>
+                    Should be hosted on Firebase ! &nbsp;&nbsp; (not in the scope of CS-602)
                 </li>
             </ul>
             <br></br>

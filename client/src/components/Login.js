@@ -49,7 +49,7 @@ class Login extends Component {
             const len = array.length;
             for (i=0; i < len; i++){
             // console.log("This array ==>", array[i]['name'])
-                if (array[i]['email'] == this.state.email && array[i]['password'] == this.state.password) {
+                if (array[i]['email'] === this.state.email && array[i]['password'] === this.state.password) {
                     // window.alert("You " + this.state.email + "Login !!!!");
                     const _id = array[i]['_id']
                     const treeId = array[i]['trees']

@@ -51,6 +51,7 @@ class DisplayTrees extends Component {
             console.log("handleRemoveTree: resp");
             console.log(resp);
             api.getAllTrees();
+
         });
     }
     render() {
