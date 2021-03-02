@@ -13,9 +13,7 @@ import { Welcome , Login} from './components';
 import {
   DisplayTrees,
   InsertTree,
-  UpdateTree,
-  PageLayout,
-  TreesList
+  UpdateTree
 } from './views';
 
 import styled from 'styled-components';

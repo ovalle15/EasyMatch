@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import SortableTree, {
-    SortableTreeWithoutDndContext,
-} from "react-sortable-tree";
+import SortableTree from "react-sortable-tree";
 import {
   addNodeUnderParent,
   // getFlatDataFromTree,
@@ -15,7 +13,6 @@ import {
 import Button from "react-bootstrap/Button";
 
 import api from "../api";
-import { insertSingleTree } from '../actions';
 import {Link} from 'react-router-dom';
 
 

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import SortableTree, {
-    SortableTreeWithoutDndContext,
-} from "react-sortable-tree";
+import SortableTree from "react-sortable-tree";
 import {
   addNodeUnderParent,
   // getFlatDataFromTree,
@@ -16,7 +14,7 @@ import Button from "react-bootstrap/Button";
 
 import api from "../api";
 import {Link} from 'react-router-dom';
-import { SwipeableDrawer } from '@material-ui/core';
+
 
 
 
