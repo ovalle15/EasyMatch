@@ -68,6 +68,7 @@ class App extends Component {
           {publicViews}
         </MainViewContainer>
       </Router>
+
     )}
 };
 export default App;

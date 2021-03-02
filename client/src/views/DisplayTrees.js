@@ -29,6 +29,7 @@ class DisplayTrees extends Component {
 
     componentDidMount(){
         console.log("TreeList: props");
+
         this.setState({needsRefresh: !this.state.needsRefresh})
         // api.getAllTrees();
         const trees = api.getAllTrees()
@@ -64,7 +65,7 @@ class DisplayTrees extends Component {
 
         return (trees || []).length > 0 && (
             <Table aria-label="caption table">
-                <caption>A basic table example with a caption</caption>
+                <caption>All trees created </caption>
                 <TableHead>
                     <TableRow>
                         <TableCell>Mongo Id</TableCell>
