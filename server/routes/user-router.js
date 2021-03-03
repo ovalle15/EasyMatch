@@ -9,11 +9,11 @@ const router = express.Router();
 
 router.get("/current", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
-  res.header("x-auth-token", token).send({
-    _id: user._id,
-    name: user.name,
-    email: user.email
-  });
+  // res.header("x-auth-token", token).send({
+  //   _id: user._id,
+  //   name: user.name,
+  //   email: user.email
+  // });
   console.log("When ----/current---- is called",user);
 
   console.log("this is req", req);
