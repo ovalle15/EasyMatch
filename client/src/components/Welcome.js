@@ -82,7 +82,7 @@ const Welcome = () => (
                     (not in the scope of CS-602)
                 </li>
                 <li>
-                    Authentication should be fully integrated &nbsp;&nbsp;
+                    Authentication with Json Web Tokens (JWT) should be fully integrated &nbsp;&nbsp;
                     (not in the scope of CS-602?)
                 </li>
                 <li>
