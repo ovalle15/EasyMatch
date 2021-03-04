@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import SortableTree from "react-sortable-tree";
 import {
   addNodeUnderParent,
-  // getFlatDataFromTree,
-  // getDescendantCount,
-  // walk,
-  // walkDescendants,
   getNodeAtPath,
   removeNodeAtPath,
 } from "../utils/tree-data-utils";
@@ -15,12 +11,6 @@ import Button from "react-bootstrap/Button";
 import api from "../api";
 import {Link} from 'react-router-dom';
 
-
-// const HomeStyles = styled.div`
-//   padding:0% 10%;
-//   height: 20em;
-//   /* max-height: 100vh; */
-// `;
 
 const HomeStyles = styled.div.attrs({
     className: 'tree-view'
@@ -90,11 +80,11 @@ export default class UpdateTree extends Component {
         parentKey = null;
       }
       // console.log(getNodeKey)
-
+      const num = Math.floor(Math.random() * 90 + 10)
       let NEW_NODE = {
         title: node.title,
-        treeIndex: treeIndex + 1}
-      console.log(NEW_NODE)
+        treeIndex: treeIndex + num}
+      console.log("This is the new node ====>",NEW_NODE)
       let newTree = addNodeUnderParent({
         treeData: this.state.treeData,
         newNode: NEW_NODE,
@@ -104,7 +94,7 @@ export default class UpdateTree extends Component {
       });
       // debugger;
       this.setState({ treeData: newTree.treeData });
-      console.log(newTree)
+      console.log("This is newTree ===>",newTree)
     }
 
     removeNode(rowInfo) {
@@ -126,12 +116,12 @@ export default class UpdateTree extends Component {
       this.setState({ treeData });
     }
     fetchIndexAtNode(rowInfo) {
-      // console.log(rowInfo);
+      console.log("Row Info ===>",rowInfo);
       const currentRowInfo = rowInfo
 
       for (var i=0; i< currentRowInfo.length; i++){
         if (currentRowInfo[i]['children']){
-          console.log(currentRowInfo[i])
+          console.log("ROW INFO ===>",currentRowInfo[i])
           const children = currentRowInfo[i]['children']
           for (var c=0; c <children.length; i++){
             const index = JSON.stringify(children[i])
@@ -139,9 +129,13 @@ export default class UpdateTree extends Component {
           }
         }
       }
-      const index = JSON.stringify(rowInfo['node']['index'])
+      if (currentRowInfo.node.treeIndex){
+        console.log("rowInfo treeIndex ===>", currentRowInfo.node.treeIndex)
+        const index =JSON.stringify(currentRowInfo.node.treeIndex)
+        return index
+      }
+      const index = JSON.stringify(rowInfo.node.index)
       return index
-
     }
     updateTreeNodeLabels(event) {
       // console.log("this event ==>", event.target.index)
@@ -155,20 +149,16 @@ export default class UpdateTree extends Component {
       console.log("this state name index ===>", parseInt(name))
       const currentTreeData = this.state.treeData;
 
-      console.log(currentTreeData);
       for (var i = 0; i < currentTreeData.length; i++){
         if (currentTreeData[i].index === currentIndex){
           console.log(currentTreeData[i].index === currentIndex)
           currentTreeData[i].title =  value;
-          console.log(currentTreeData[i])
-        } else if (currentTreeData[i].children || {}) {
-          console.log(currentTreeData[i].children || {})
-          // TODO Children should have labeled children
-          // window.alert("Ups ! children can't have other labeled children  !!")
+          console.log("THIS IS CURRENT TREE DATA===>",currentTreeData[i])
+        } else if (currentTreeData[i].treeIndex === currentIndex){
+          currentTreeData[i].title = value;
         }
 
       }
-      // console.log(this.state.)
 
     }
     setStateOfTitle(event) {
@@ -210,38 +200,39 @@ export default class UpdateTree extends Component {
     };
 
     render() {
-        // debugger;
-
         const treeData = this.state.treeData;
         console.log(treeData);
         return (
             <HomeStyles>
               <br></br>
               <h4>Enter Title</h4>
-              <input
-                name="treeTitle"
-                type="string"
-                value={this.state.rowInfo}
-                onChange={this.setStateOfTitle}
-                ></input>
+                <input
+                  style={{width: "50%"}}
+                  name="treeTitle"
+                  type="string"
+                  value={this.state.rowInfo}
+                  onChange={this.setStateOfTitle}
+                  ></input>
                 <br></br>
                 <SortableTree
                     style={{height: "100%"}}
                     treeData={treeData}
                     onChange={(treeData) => {
-                        debugger;
                         this.setState({ treeData })}
                     }
                     generateNodeProps={(rowInfo) => ({
                         buttons: [
                         <div>
                             <input
+                            style={{width: "45%"}}
+                            maxLength="15"
                             name={this.fetchIndexAtNode(rowInfo)}
                             type="string"
                             value={this.state.rowInfo}
-                            // index=
                             onChange={this.updateTreeNodeLabels}
+
                             ></input>
+                            &nbsp;
                             <Button
                                 variant="outline-danger"
                                 size="sm"

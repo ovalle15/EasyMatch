@@ -75,26 +75,27 @@ const Welcome = () => (
             <ul>
                 <li>
                     Resolve page reload after delete and create tree &nbsp;&nbsp;
-                    (in scope of CS-602)
+
                 </li>
                 <li>
-                    User should be able to update individual nodes in the UI &nbsp;&nbsp;
-                    (not in the scope of CS-602)
+                    User should be able to update the labels of children, so far
+                    user can only modify and save parent nodes labels &nbsp;&nbsp;
+
                 </li>
                 <li>
                     Authentication with Json Web Tokens (JWT) should be fully integrated &nbsp;&nbsp;
-                    (not in the scope of CS-602?)
+
                 </li>
                 <li>
                     In the "Get trees" table an unique tree identifier should replace the mongo ID &nbsp;&nbsp;
-                    (not in the scope of CS-602)
+
                 </li>
                 <li>
                     Responsive UI and customized tree  &nbsp;&nbsp;
-                    (not in the scope of CS-602)
+
                 </li>
                 <li>
-                    Should be hosted on Firebase ! &nbsp;&nbsp; (not in the scope of CS-602)
+                    Should be hosted on Firebase ! &nbsp;&nbsp;
                 </li>
             </ul>
             <br></br>

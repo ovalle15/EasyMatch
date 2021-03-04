@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import SortableTree from "react-sortable-tree";
 import {
   addNodeUnderParent,
-  // getFlatDataFromTree,
-  // getDescendantCount,
-  // walk,
-  // walkDescendants,
   getNodeAtPath,
   removeNodeAtPath,
 } from "../utils/tree-data-utils";
@@ -75,7 +71,6 @@ export default class InsertTree extends Component {
         getNodeKey: ({ treeIndex }) => treeIndex,
         ignoredCollapsed: true,
       });
-      // console.log(parentNode)
       let getNodeKey = ({ node: object, treeIndex: number }) => {
         return number;
       };
@@ -83,12 +78,11 @@ export default class InsertTree extends Component {
       if (parentKey === -1) {
         parentKey = null;
       }
-      // console.log(getNodeKey)
 
       let NEW_NODE = {
         title: node.title,
         treeIndex: treeIndex + 1}
-      console.log(NEW_NODE)
+      console.log("This is the NEW NODE ===>",NEW_NODE)
       let newTree = addNodeUnderParent({
         treeData: this.state.treeData,
         newNode: NEW_NODE,
@@ -134,6 +128,11 @@ export default class InsertTree extends Component {
           }
         }
       }
+      if (currentRowInfo.node.treeIndex){
+        console.log("rowInfo treeIndex ===>", currentRowInfo.node.treeIndex)
+        const index =JSON.stringify(currentRowInfo.node.treeIndex)
+        return index
+      }
       const index = JSON.stringify(rowInfo['node']['index'])
       return index
 
@@ -157,15 +156,11 @@ export default class InsertTree extends Component {
           console.log(currentTreeData[i].index === currentIndex)
           currentTreeData[i].title =  value;
           console.log(currentTreeData[i])
-        } else if (currentTreeData[i].children || {}) {
-          console.log(currentTreeData[i].children || {})
-          // TODO Children should have labeled children
-          // window.alert("Ups ! children can't have other labeled children  !!")
+        } else if (currentTreeData[i].treeIndex === currentIndex){
+            currentTreeData[i].title = value;
         }
-
-      }
       // console.log(this.state.)
-
+      }
     }
     setStateOfTitle(event) {
       const target = event.target;
@@ -206,7 +201,7 @@ export default class InsertTree extends Component {
     };
 
   render() {
-        // debugger;
+        // TO DO BFS TREE WALKING
         /**
          * --- indexing ideas ---
          * "topTier0"
@@ -230,6 +225,7 @@ export default class InsertTree extends Component {
             <br></br>
             <h4>Enter Title</h4>
             <input
+              style={{width: "50%"}}
               name="treeTitle"
               type="string"
               value={this.state.rowInfo}
@@ -239,20 +235,20 @@ export default class InsertTree extends Component {
             <SortableTree
               treeData={this.state.treeData}
               onChange={(treeData) => {
-                debugger;
                 this.setState({ treeData })}
               }
               generateNodeProps={(rowInfo) => ({
                 buttons: [
                   <div>
                     <input
+                      style={{width: "45%"}}
+                      maxLength="15"
                       name={this.fetchIndexAtNode(rowInfo)}
                       type="string"
                       value={this.state.rowInfo}
-                      // index=
                       onChange={this.updateTreeNodeLabels}
                       ></input>
-
+                    &nbsp;
                     <Button
                       variant="outline-danger"
                       size="sm"
