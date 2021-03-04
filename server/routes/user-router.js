@@ -43,12 +43,32 @@ router.get("/all", async(req, res) => {
               });
       }
       console.log(`200 in 'getusers': Items fetched!`);
-      return res
-          .status(200)
-          .json({
-              success: true,
-              items: users,
-          });
+      console.log(`this is users`, users.map((c) => {return c.email}));
+      res.format({
+        "application/json": () => {
+          res.json(users)
+        },
+        'application/xml': () => {
+          const xml = `
+            <?xml version="1.0"?>
+            ${users.map((c) => `
+            <users ${c._id}>
+              <trees ${c.trees}<trees/>
+              <name ${c.name}<name/>
+              <email ${c.email}<email/>
+            </users>
+            `)}
+          `;
+          res.type("application/xml");
+          res.send(xml)
+        },
+      })
+      // const resjson =  res
+      //     .status(200)
+      //     .json({
+      //         success: true,
+      //         items: users,
+      //     });
   }).catch(err => {
       console.error(`caught error in 'getusers': ${err}`);
       console.error(err);

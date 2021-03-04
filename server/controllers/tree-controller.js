@@ -1,7 +1,8 @@
+
 const { response } = require('express');
 const Tree = require('../models/tree-model');
 
-getTrees = async(req, res) => {
+getTrees =  async(req, res) => {
     await Tree.find({}, (err, trees) => {
         if (err) {
             console.error(`400 in 'getTree': ${err}`);
@@ -22,21 +23,34 @@ getTrees = async(req, res) => {
                 });
         }
         console.log(`200 in 'getTree': Items fetched!`);
-        return res
-            .status(200)
-            .json({
-                success: true,
-                items: trees,
-            });
-    }).catch(err => {
-        console.error(`caught error in 'getTree': ${err}`);
-        console.error(err);
-        return res
-            .status(404)
-            .json({
-                success: false,
-                error: err
-            });
+        console.log(`200 in 'getTreetitles'`, trees.map((c) => {return c.title}));
+        return res.format({
+            // Json format requests
+            // test by: curl -X GET -H "Accept:application/json" http://localhost:3000/api/trees
+            "application/json": () => {
+              res.json({
+                  succes: true,
+                  items: trees
+              });
+            },
+            // XML requests
+            // test by running : // curl -X GET -H "Accept:application/xml" http://localhost:3000/api/trees
+            "application/xml": () => {
+              const zipXml = `
+              <?xml version="1.0"?>
+              ${trees.map((c) => `
+            <trees>
+                <treeId> ${c._id} </treeId>
+                <title>${c.title}</title>
+                <createdDate>${c.createdAt}</createdDate>
+                <updatedDate>${c.updatedAt}</updatedDate>
+            </trees>
+                `)}
+              `;
+              res.type("application/xml");
+              res.send(zipXml);
+            }
+        })
     });
 };
 getTreeById = async(req, res) => {
@@ -233,5 +247,5 @@ module.exports = {
     getTreeById,
     createTree,
     updateTree,
-    deleteTree,
+    deleteTree
 };
