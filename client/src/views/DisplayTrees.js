@@ -29,7 +29,7 @@ class DisplayTrees extends Component {
 
     componentDidMount(){
         console.log("TreeList: props");
-
+        console.log("DisplayTrees: state", this.state);
         this.setState({needsRefresh: !this.state.needsRefresh})
         // api.getAllTrees();
         const trees = api.getAllTrees()

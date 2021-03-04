@@ -33,15 +33,19 @@ const HomeStyles = styled.div.attrs({
 export default class UpdateTree extends Component {
     constructor(props) {
         super(props);
-        this.updateTreeData = this.updateTreeData.bind(this);
-        this.addNode = this.addNode.bind(this);
-        this.removeNode = this.removeNode.bind(this);
         this.state = {
             // TODO: reorganize this better
             tree: {},
             treeData: [],
             getTreeData: () => this.state.treeData
         };
+      this.updateTreeData = this.updateTreeData.bind(this);
+      this.addNode = this.addNode.bind(this);
+      this.removeNode = this.removeNode.bind(this);
+      this.setStateOfTitle = this.setStateOfTitle.bind(this);
+      this.updateTreeNodeLabels = this.updateTreeNodeLabels.bind(this);
+      this.fetchIndexAtNode = this.fetchIndexAtNode.bind(this);
+      this.getFlatDataFromTree = this.getFlatDataFromTree.bind(this);
     }
 
 
@@ -121,8 +125,62 @@ export default class UpdateTree extends Component {
     updateTreeData(treeData) {
       this.setState({ treeData });
     }
+    fetchIndexAtNode(rowInfo) {
+      // console.log(rowInfo);
+      const currentRowInfo = rowInfo
 
-    getFlatDataFromTree() {
+      for (var i=0; i< currentRowInfo.length; i++){
+        if (currentRowInfo[i]['children']){
+          console.log(currentRowInfo[i])
+          const children = currentRowInfo[i]['children']
+          for (var c=0; c <children.length; i++){
+            const index = JSON.stringify(children[i])
+            return index
+          }
+        }
+      }
+      const index = JSON.stringify(rowInfo['node']['index'])
+      return index
+
+    }
+    updateTreeNodeLabels(event) {
+      // console.log("this event ==>", event.target.index)
+
+      const target = event.target;
+      // console.log("this state target ===>", target)
+      const value = target.value;
+      console.log("this state value ===>", value)
+      const name= target.name;
+      const currentIndex = parseInt(name);
+      console.log("this state name index ===>", parseInt(name))
+      const currentTreeData = this.state.treeData;
+
+      console.log(currentTreeData);
+      for (var i = 0; i < currentTreeData.length; i++){
+        if (currentTreeData[i].index === currentIndex){
+          console.log(currentTreeData[i].index === currentIndex)
+          currentTreeData[i].title =  value;
+          console.log(currentTreeData[i])
+        } else if (currentTreeData[i].children || {}) {
+          console.log(currentTreeData[i].children || {})
+          // TODO Children should have labeled children
+          // window.alert("Ups ! children can't have other labeled children  !!")
+        }
+
+      }
+      // console.log(this.state.)
+
+    }
+    setStateOfTitle(event) {
+      const target = event.target;
+      // console.log("This is target ===>",target)
+      const value = target.value;
+      // console.log("This is value ===>",value)
+      const name= target.name
+      console.log("This is name ===>",name)
+      this.state.tree.title = value
+    }
+    getFlatDataFromTree(event) {
       // debugger;
       if (!this.state.treeData || this.state.treeData.length < 1) {
         return [];
@@ -158,6 +216,15 @@ export default class UpdateTree extends Component {
         console.log(treeData);
         return (
             <HomeStyles>
+              <br></br>
+              <h4>Enter Title</h4>
+              <input
+                name="treeTitle"
+                type="string"
+                value={this.state.rowInfo}
+                onChange={this.setStateOfTitle}
+                ></input>
+                <br></br>
                 <SortableTree
                     style={{height: "100%"}}
                     treeData={treeData}
@@ -168,6 +235,13 @@ export default class UpdateTree extends Component {
                     generateNodeProps={(rowInfo) => ({
                         buttons: [
                         <div>
+                            <input
+                            name={this.fetchIndexAtNode(rowInfo)}
+                            type="string"
+                            value={this.state.rowInfo}
+                            // index=
+                            onChange={this.updateTreeNodeLabels}
+                            ></input>
                             <Button
                                 variant="outline-danger"
                                 size="sm"
@@ -192,7 +266,7 @@ export default class UpdateTree extends Component {
                         type="button"
                         variant="outline-success"
                         size="lg"
-                        onClick={(event) => this.getFlatDataFromTree()}
+                        onClick={this.getFlatDataFromTree}
                         >
                         Save
                     </Button>
