@@ -4,12 +4,82 @@ const { User, validate } = require("../models/user-model");
 const express = require("express");
 const router = express.Router();
 
+
+
+
 router.get("/current", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
+  // res.header("x-auth-token", token).send({
+  //   _id: user._id,
+  //   name: user.name,
+  //   email: user.email
+  // });
+  console.log("When ----/current---- is called",user);
 
-  console.log("When /current is called",user);
+  console.log("this is req", req);
+  console.log("this is res", res);
   res.send(user);
 });
+
+
+router.get("/all", async(req, res) => {
+    await User.find({}, (err, users) => {
+      if (err) {
+          console.error(`400 in 'getusers': ${err}`);
+          return res
+              .status(400)
+              .json({
+                  success: false,
+                  error: err,
+              });
+      }
+      if (!users.length) {
+          console.error(`404 in 'getusers': Items not found`);
+          return res
+              .status(404)
+              .json({
+                  success: false,
+                  error: 'Items not found',
+              });
+      }
+      console.log(`200 in 'getusers': Items fetched!`);
+      console.log(`this is users`, users.map((c) => {return c.email}));
+      res.format({
+        "application/json": () => {
+          res.json(users)
+        },
+        'application/xml': () => {
+          const xml = `
+            <?xml version="1.0"?>
+            ${users.map((c) => `
+            <users ${c._id}>
+              <trees ${c.trees}<trees/>
+              <name ${c.name}<name/>
+              <email ${c.email}<email/>
+            </users>
+            `)}
+          `;
+          res.type("application/xml");
+          res.send(xml)
+        },
+      })
+      // const resjson =  res
+      //     .status(200)
+      //     .json({
+      //         success: true,
+      //         items: users,
+      //     });
+  }).catch(err => {
+      console.error(`caught error in 'getusers': ${err}`);
+      console.error(err);
+      return res
+          .status(404)
+          .json({
+              success: false,
+              error: err
+          });
+  });
+})
 
 router.post("/", async (req, res) => {
 

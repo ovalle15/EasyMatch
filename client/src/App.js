@@ -13,9 +13,7 @@ import { Welcome , Login} from './components';
 import {
   DisplayTrees,
   InsertTree,
-  UpdateTree,
-  PageLayout,
-  TreesList
+  UpdateTree
 } from './views';
 
 import styled from 'styled-components';
@@ -41,7 +39,9 @@ class App extends Component {
           <Route exact path={routes.TREES} component={DisplayTrees} />
           <Route exact path={routes.TREE_INSERT} component={InsertTree} /> {/* http://localhost:3001/tree/create */}
           <Route exact path={routes.TREE_UPDATE} component={UpdateTree} />
-          <Route exact path={routes.CREATEUSER} component={Login}/>
+          {/* <Route exact path={routes.CREATEUSER} component={Login}/> */}
+          <Route exact path={routes.USER_LOGIN} component={Login} />
+
           {/* </React.Fragment> */}
       </Switch>
   );
@@ -57,8 +57,8 @@ class App extends Component {
               <Nav.Link href="/tree">Create Tree</Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link href="/users/create">Sign Up</Nav.Link>
-              <Nav.Link href="/users/current">Login</Nav.Link>
+              {/* <Nav.Link href="/users/create">Sign Up</Nav.Link> */}
+              <Nav.Link href="/users/login">Login</Nav.Link>
             </Nav>
         </Navbar>
 
@@ -66,6 +66,7 @@ class App extends Component {
           {publicViews}
         </MainViewContainer>
       </Router>
+
     )}
 };
 export default App;

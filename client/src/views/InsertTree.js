@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import SortableTree, {
-    SortableTreeWithoutDndContext,
-} from "react-sortable-tree";
+import SortableTree from "react-sortable-tree";
 import {
   addNodeUnderParent,
-  // getFlatDataFromTree,
-  // getDescendantCount,
-  // walk,
-  // walkDescendants,
   getNodeAtPath,
   removeNodeAtPath,
 } from "../utils/tree-data-utils";
@@ -16,7 +10,7 @@ import Button from "react-bootstrap/Button";
 
 import api from "../api";
 import {Link} from 'react-router-dom';
-import { SwipeableDrawer } from '@material-ui/core';
+
 
 
 
@@ -31,52 +25,40 @@ const HomeStyles = styled.div.attrs({
 export default class InsertTree extends Component {
     constructor(props) {
       super(props);
-      this.updateTreeData = this.updateTreeData.bind(this);
-      this.addNode = this.addNode.bind(this);
-      this.removeNode = this.removeNode.bind(this);
+
       this.state = {
         tree: {
-          title: "Week 01/01/2021",
+          // title: "bhe",
+          title: "PLACEHOLDER",
           trees: () => this.state.treeData
         },
         treeData: [
-          { title: "AND", expanded: true },
-          { title: "OR", expanded: true },
+          { title: "", expanded: true , index: 0},
+          { title: "", expanded: true , index: 1},
           {
-            title: "MONDAY",
+            title: "",
             expanded: true,
+            index: 2,
             children: [
-              { title: "PROJECT-1" },
+              { title: "" , index: 3},
               {
-                title: "PROJECT-2",
+                title: "",
                 expanded: false,
-                children: [{ title: "sub-task" }],
+                index: 4,
+                children: [{ title: "" , index: 5}],
               },
             ],
-          },
-          {
-            title: "TUESDAY",
-            expanded: true,
-            children: [
-              {
-                title: "Meeting-1",
-                expanded: false,
-                children: [
-                  { title: "PowerPoint prep" },
-                  { title: "Call Investors" },
-                  { title: "Meditation practice" },
-                ],
-              },
-              { title: "Other stuff" },
-            ],
-          },
-          {
-            title: "WEDNESDAY",
-            expanded: true,
-            children: [{ title: "Flight to Italy" }, { title: "Meet Investors" }],
           },
         ],
       };
+
+      this.updateTreeData = this.updateTreeData.bind(this);
+      this.addNode = this.addNode.bind(this);
+      this.removeNode = this.removeNode.bind(this);
+      this.setStateOfTitle = this.setStateOfTitle.bind(this);
+      this.updateTreeNodeLabels = this.updateTreeNodeLabels.bind(this);
+      this.fetchIndexAtNode = this.fetchIndexAtNode.bind(this);
+      this.getFlatDataFromTree = this.getFlatDataFromTree.bind(this);
     }
 
     addNode(rowInfo) {
@@ -89,7 +71,6 @@ export default class InsertTree extends Component {
         getNodeKey: ({ treeIndex }) => treeIndex,
         ignoredCollapsed: true,
       });
-      // console.log(parentNode)
       let getNodeKey = ({ node: object, treeIndex: number }) => {
         return number;
       };
@@ -97,12 +78,11 @@ export default class InsertTree extends Component {
       if (parentKey === -1) {
         parentKey = null;
       }
-      // console.log(getNodeKey)
 
       let NEW_NODE = {
         title: node.title,
         treeIndex: treeIndex + 1}
-      console.log(NEW_NODE)
+      console.log("This is the NEW NODE ===>",NEW_NODE)
       let newTree = addNodeUnderParent({
         treeData: this.state.treeData,
         newNode: NEW_NODE,
@@ -116,6 +96,7 @@ export default class InsertTree extends Component {
     }
 
     removeNode(rowInfo) {
+      // console.log("This is rowInfo ===>", this.state.rowInfo)
       let { node, treeIndex, path } = rowInfo;
       this.setState({
         treeData: removeNodeAtPath({
@@ -133,13 +114,72 @@ export default class InsertTree extends Component {
     updateTreeData(treeData) {
       this.setState({ treeData });
     }
+    fetchIndexAtNode(rowInfo) {
+      // console.log(rowInfo);
+      const currentRowInfo = rowInfo
 
-    getFlatDataFromTree() {
+      for (var i=0; i< currentRowInfo.length; i++){
+        if (currentRowInfo[i]['children']){
+          console.log(currentRowInfo[i])
+          const children = currentRowInfo[i]['children']
+          for (var c=0; c <children.length; i++){
+            const index = JSON.stringify(children[i])
+            return index
+          }
+        }
+      }
+      if (currentRowInfo.node.treeIndex){
+        console.log("rowInfo treeIndex ===>", currentRowInfo.node.treeIndex)
+        const index =JSON.stringify(currentRowInfo.node.treeIndex)
+        return index
+      }
+      const index = JSON.stringify(rowInfo['node']['index'])
+      return index
+
+    }
+
+    updateTreeNodeLabels(event) {
+      // console.log("this event ==>", event.target.index)
+
+      const target = event.target;
+      // console.log("this state target ===>", target)
+      const value = target.value;
+      console.log("this state value ===>", value)
+      const name= target.name;
+      const currentIndex = parseInt(name);
+      console.log("this state name index ===>", parseInt(name))
+      const currentTreeData = this.state.treeData;
+
+      console.log(currentTreeData);
+      for (var i = 0; i < currentTreeData.length; i++){
+        if (currentTreeData[i].index === currentIndex){
+          console.log(currentTreeData[i].index === currentIndex)
+          currentTreeData[i].title =  value;
+          console.log(currentTreeData[i])
+        } else if (currentTreeData[i].treeIndex === currentIndex){
+            currentTreeData[i].title = value;
+        }
+      // console.log(this.state.)
+      }
+    }
+    setStateOfTitle(event) {
+      const target = event.target;
+      // console.log("This is target ===>",target)
+      const value = target.value;
+      // console.log("This is value ===>",value)
+      const name= target.name
+      console.log("This is name ===>",name)
+      this.state.tree.title = value
+    }
+
+    getFlatDataFromTree(event) {
+      event.preventDefault();
       // debugger;
       if (!this.state.treeData || this.state.treeData.length < 1) {
         return [];
       }
       // debugger;
+      // console.log(" this is the state.tree.title ====>" ,this.state.tree.title)
       const flattened = {
         title: this.state.tree.title,
         children: this.state.tree.trees()
@@ -148,7 +188,7 @@ export default class InsertTree extends Component {
 
       return api.insertTree(flattened)
         .then(resp => {
-          console.log("this is the response", resp)
+          // console.log("this is the response", resp)
           if (resp) {
            window.alert(resp.data.message);
           }
@@ -161,21 +201,54 @@ export default class InsertTree extends Component {
     };
 
   render() {
-        // debugger;
+        // TO DO BFS TREE WALKING
+        /**
+         * --- indexing ideas ---
+         * "topTier0"
+         * - "topTier0.nextTier0"
+         * -- "topTier0.nextTier0.nextNextTier0"
+         * - "topTier0.nextTier1"
+         * -- "topTier0.nextTier1.nextNextTier0"
+         * - "topTier0.nextTier2"
+         * -- "topTier0.nextTier2.nextNextTier0"
+         * -- "topTier0.nextTier2.nextNextTier1"
+         * -- "topTier0.nextTier2.nextNextTier2"
+         *
+         *
+         * var indexTree = "topTier0.nextTier1.nextNextTier1".split('.')
+         *
+         */
       return (
 
 
           <HomeStyles>
-
+            <br></br>
+            <h4>Enter Title</h4>
+            <input
+              style={{width: "50%"}}
+              name="treeTitle"
+              type="string"
+              value={this.state.rowInfo}
+              onChange={this.setStateOfTitle}
+              ></input>
+              <br></br>
             <SortableTree
               treeData={this.state.treeData}
               onChange={(treeData) => {
-                debugger;
                 this.setState({ treeData })}
               }
               generateNodeProps={(rowInfo) => ({
                 buttons: [
                   <div>
+                    <input
+                      style={{width: "45%"}}
+                      maxLength="15"
+                      name={this.fetchIndexAtNode(rowInfo)}
+                      type="string"
+                      value={this.state.rowInfo}
+                      onChange={this.updateTreeNodeLabels}
+                      ></input>
+                    &nbsp;
                     <Button
                       variant="outline-danger"
                       size="sm"
@@ -200,7 +273,7 @@ export default class InsertTree extends Component {
               type="button"
               variant="outline-success"
               size="lg"
-              onClick={(event) => this.getFlatDataFromTree()}
+              onClick={this.getFlatDataFromTree}
               >
                 Save
               </Button>

@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import * as actions from '../actions';
+// import styled from 'styled-components';
+// import * as actions from '../actions';
 // import ReactTable from 'react-table-6';
 // import 'react-table-6/react-table.css';
 import { Table } from '@material-ui/core';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
+// import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+// import Paper from '@material-ui/core/Paper';
 import api from '../api'
 import {DeleteButton} from "../components";
 import {Link} from 'react-router-dom';
 import Button from "react-bootstrap/Button";
 
 
-const Wrapper = styled.div`
-    padding: 0 40px 40px 40px;
-`;
+// const Wrapper = styled.div`
+//     padding: 0 40px 40px 40px;
+// `;
 
 class DisplayTrees extends Component {
 
@@ -29,6 +29,7 @@ class DisplayTrees extends Component {
 
     componentDidMount(){
         console.log("TreeList: props");
+        console.log("DisplayTrees: state", this.state);
         this.setState({needsRefresh: !this.state.needsRefresh})
         // api.getAllTrees();
         const trees = api.getAllTrees()
@@ -50,6 +51,7 @@ class DisplayTrees extends Component {
             console.log("handleRemoveTree: resp");
             console.log(resp);
             api.getAllTrees();
+
         });
     }
     render() {
@@ -64,7 +66,7 @@ class DisplayTrees extends Component {
 
         return (trees || []).length > 0 && (
             <Table aria-label="caption table">
-                <caption>A basic table example with a caption</caption>
+                <caption>All trees created </caption>
                 <TableHead>
                     <TableRow>
                         <TableCell>Mongo Id</TableCell>
