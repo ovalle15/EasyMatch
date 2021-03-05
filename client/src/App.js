@@ -58,7 +58,7 @@ class App extends Component {
             </Nav>
             <Nav>
               {/* <Nav.Link href="/users/create">Sign Up</Nav.Link> */}
-              <Nav.Link href="/users/login">Login</Nav.Link>
+              {/* <Nav.Link href="/users/login">Login</Nav.Link> */}
             </Nav>
         </Navbar>
 
