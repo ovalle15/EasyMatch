@@ -18,7 +18,7 @@ let TreeSchema = new Schema(
 });
 
 const Tree = mongoose.model('tree', TreeSchema);
-console.log("THIS IS THE Tree ---->", Tree);
+// console.log("THIS IS THE Tree ---->", Tree);
 module.exports = mongoose.model('tree', TreeSchema);
 
 
