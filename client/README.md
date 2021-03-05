@@ -17,6 +17,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### `nodemon index.js`
 
+### 4) The first step should be to create a tree
+### 5) Once a tree is create navigate to the get trees page.
+
 # To fetch JSON formatted data
 
 ### `curl -X GET -H "Accept:application/json" http://localhost:3000/api/trees`

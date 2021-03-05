@@ -173,7 +173,7 @@ export default class InsertTree extends Component {
     }
 
     getFlatDataFromTree(event) {
-      // event.preventDefault();
+      event.preventDefault();
       // debugger;
       if (!this.state.treeData || this.state.treeData.length < 1) {
         return [];

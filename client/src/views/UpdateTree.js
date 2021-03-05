@@ -171,7 +171,7 @@ export default class UpdateTree extends Component {
       this.state.tree.title = value
     }
     getFlatDataFromTree(event) {
-      // debugger;
+      event.preventDefault();
       if (!this.state.treeData || this.state.treeData.length < 1) {
         return [];
       }
