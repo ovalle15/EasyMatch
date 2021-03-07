@@ -7,11 +7,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
  2) Install all packages `npm i` in the client and server side separately
  3) run the scripts below
 
-## In the project client folder, you can run:
+### In the project client folder, you can run:
 
  `yarn start`
 
-## In the project server folder, you can run:
+### In the project server folder, you can run:
 
  `nodemon index.js`
 
