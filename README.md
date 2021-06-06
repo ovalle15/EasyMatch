@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+![demon](EasyMatch.gif)
+
 ## Steps needed to run the application:
  1) Create a mongoDB instance called `treeDB`
  2) Install all packages `npm i` in the client and server side separately
